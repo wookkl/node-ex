@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { type } from 'os';
 import * as typeORM from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
@@ -7,7 +6,7 @@ const getOrCreateConnection = async (args: PostgresConnectionOptions): Promise<v
   try {
     await typeORM.createConnection(args);
   } catch (error) {
-    await typeORM.getConnection(args);
+    typeORM.getConnection(args.name);
   }
 };
 
