@@ -1,5 +1,11 @@
 {
-   "synchronize": true,
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "types",
+   "password": "qwer1234",
+   "database": "node_blog",
+   "synchronize": false,
    "logging": false,
    "entities": [
       "src/entity/**/*.ts"

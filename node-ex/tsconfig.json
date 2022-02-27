@@ -11,5 +11,10 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true
-   }
+   },
+   "ts-node": {
+      "compilerOptions": {
+        "module": "commonjs"
+      }
+    }
 }

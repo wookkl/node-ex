@@ -14,7 +14,7 @@
       "express": "^4.17.2",
       "pg": "^8.7.3",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.2.43"
+      "typeorm": "0.2.44"
    },
    "scripts": {
       "start": "ts-node src/index.ts",
