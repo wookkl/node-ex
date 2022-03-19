@@ -1,14 +1,14 @@
-import * as express from 'express';
-import * as typeORM from 'typeorm';
+import * as typeORM from "typeorm";
+import * as express from "express";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 const getOrCreateConnection = async (args: PostgresConnectionOptions): Promise<void> => {
   try {
     await typeORM.createConnection(args);
-  } catch (error) {
+  } catch(error) {
     typeORM.getConnection(args.name);
   }
-};
+}
 
 export const dbConnectionMiddleware = async (request: express.Request, callback: express.Response, next) => {
   try {
@@ -23,6 +23,7 @@ export const dbConnectionMiddleware = async (request: express.Request, callback:
     });
     next();
   } catch (error) {
-    return callback.status(500).json({message: "DB connection failed.", error});
+    return await callback.status(500).json({message: "DB connection failed.", error});
   }
-};
+
+}

@@ -1,19 +1,21 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
 @Entity()
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class User {
 
-  @Column()
-  username: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  password: string;
+    @Column()
+    username: string;
 
-  @Column({ default: false })
-  isStaff: boolean = false;
+    @Column()
+    password: string;
+    
+    @Column({ default: false })
+    isStaff: boolean = false;
 
-  @Column({ type: 'date' })
-  createdAt: string = (new Date()).toISOString();
+    @Column({ type: 'date' })
+    createdAt: string = (new Date()).toISOString();
+
 }

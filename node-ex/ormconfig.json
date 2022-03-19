@@ -2,9 +2,9 @@
    "type": "postgres",
    "host": "localhost",
    "port": 5432,
-   "username": "types",
+   "username": "node_ex",
    "password": "qwer1234",
-   "database": "node_blog",
+   "database": "node_ex_db",
    "synchronize": false,
    "logging": false,
    "entities": [

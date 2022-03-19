@@ -1,19 +1,16 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
+import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import { Request, Response } from "express";
-import { dbConnectionMiddleware } from './middleware';
-import { Routes } from "./routes";
+import {Request, Response} from "express";
+import {Routes} from "./routes";
+import { dbConnectionMiddleware } from "./middleware";
 
-createConnection().then(async (connection) => {
-
-  // create express app
+createConnection().then(async connection => {
   const app = express();
   app.use(bodyParser.json());
   app.use(dbConnectionMiddleware);
 
-  // register express routes from defined application routes
   Routes.forEach(route => {
     (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
       const result = (new (route.controller as any))[route.action](req, res, next);
