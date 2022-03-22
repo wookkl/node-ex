@@ -1,22 +1,23 @@
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/account/User";
 import {UserRepository} from "../repository/UserRepository";
-import {DeepPartial} from "typeorm";
+import {DeepPartial, getConnection, getCustomRepository} from "typeorm";
 
 export class UserController {
     constructor() {
     }
 
-    private userRepository = new UserRepository();
+    private userRepository = getCustomRepository(UserRepository);
 
     async getById(request: Request, response: Response, next: NextFunction): Promise<User> {
-        const id = request.params.structureId;
-        return await this.userRepository.findOne(id);
+        return await this.userRepository.findOne(request.params.id);
     }
 
-    create(request: Request, response: Response, next: NextFunction): User {
+    async create(request: Request, response: Response, next: NextFunction): Promise<User> {
         const validatedData = UserController.validateUserCreateData(request.body);
-        return this.userRepository.create(validatedData);
+        const user = this.userRepository.create(validatedData);
+        await this.userRepository.save(user);
+        return user
     }
 
     private static validateUserCreateData(data: Record<string, unknown>): DeepPartial<User> {
