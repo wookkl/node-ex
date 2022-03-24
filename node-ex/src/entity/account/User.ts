@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, BaseEntity, OneToMany} from "typeorm";
 import {Profile} from "./Profile";
+import {Post} from "../entry/Post";
 
 
 @Entity()
@@ -26,4 +27,11 @@ export class User extends BaseEntity{
     )
     @JoinColumn()
     profile: Promise<Profile> | Profile
+
+    @OneToMany(
+        () => Post,
+        post => post.user,
+    )
+    @JoinColumn()
+    posts: Promise<Post[]> | Post[]
 }
