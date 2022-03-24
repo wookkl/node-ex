@@ -1,8 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne, BaseEntity} from "typeorm";
+import {Profile} from "./Profile";
+
 
 @Entity()
-export class User {
-
+export class User extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -18,4 +19,11 @@ export class User {
     @Column({ type: 'date' })
     createdAt: string = (new Date()).toISOString();
 
+    @OneToOne(
+    () => Profile,
+    profile => profile.user,
+    {onDelete: "CASCADE", nullable: true}
+    )
+    @JoinColumn()
+    profile: Promise<Profile> | Profile
 }
