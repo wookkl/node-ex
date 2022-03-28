@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/account/User";
-import {UserRepository} from "../repository/UserRepository";
+import {UserPaginationResponse, UserRepository} from "../repository/UserRepository";
 import {DeepPartial, getConnection, getCustomRepository} from "typeorm";
 
 export class UserController {
@@ -11,6 +11,12 @@ export class UserController {
 
     async getById(request: Request, response: Response, next: NextFunction): Promise<User> {
         return await this.userRepository.findOne(request.params.id);
+    }
+
+    async getByTerm(request: Request, response: Response, next: NextFunction): Promise<UserPaginationResponse> {
+        const term = request.query.term as string;
+        const page = Number(request.query.page);
+        return await this.userRepository.findByTerm(term, page);
     }
 
     async create(request: Request, response: Response, next: NextFunction): Promise<User> {

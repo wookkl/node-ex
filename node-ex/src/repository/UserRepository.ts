@@ -5,6 +5,7 @@ export interface UserPaginationResponse {
     data: User[];
     totalPage: number;
 }
+
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
     async findByTerm(term?: string, page?: number): Promise<UserPaginationResponse> {
@@ -21,7 +22,6 @@ export class UserRepository extends Repository<User> {
             queryBuilder = queryBuilder.skip(10 * Number(page - 1));
         }
         const [data, count] = await queryBuilder.getManyAndCount();
-        return { data, totalPage: Math.ceil(count / 10)};
+        return { data, totalPage: Math.ceil(count / 10) };
     }
-
 }
