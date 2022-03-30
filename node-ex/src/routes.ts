@@ -5,6 +5,11 @@ export const Routes = [{
     route: "/user/search",
     controller: UserController,
     action: "getByTerm"
+},{
+    method: "get",
+    route: "/user/login",
+    controller: UserController,
+    action: "login"
 }, {
     method: "get",
     route: "/user/:id",

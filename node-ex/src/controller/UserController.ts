@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/account/User";
-import {UserPaginationResponse, UserRepository} from "../repository/UserRepository";
+import {TokenResponse, UserCreatedResponse, UserPaginationResponse, UserRepository} from "../repository/UserRepository";
 import {DeepPartial, getConnection, getCustomRepository} from "typeorm";
 
 export class UserController {
@@ -19,11 +19,15 @@ export class UserController {
         return await this.userRepository.findByTerm(term, page);
     }
 
-    async create(request: Request, response: Response, next: NextFunction): Promise<User> {
+    async create(request: Request, response: Response, next: NextFunction): Promise<UserCreatedResponse> {
         const validatedData = UserController.validateUserCreateData(request.body);
-        const user = this.userRepository.create(validatedData);
+        const {token, user} = this.userRepository.createWithToken(validatedData);
         await this.userRepository.save(user);
-        return user
+        return {token, user};
+    }
+
+    async login(request: Request, response: Response, next: NextFunction): Promise<TokenResponse> {
+        return this.userRepository.login(request.body);
     }
 
     private static validateUserCreateData(data: Record<string, unknown>): DeepPartial<User> {
