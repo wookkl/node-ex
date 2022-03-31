@@ -52,3 +52,11 @@ export const tokenMiddleware = async (request: Request, response: Response, next
         return response.status(403).json({message: "Token must be provided.", error});
     }
 }
+
+export const corsOptionDelegate = (request, callback) => {
+    const corsOptions = {
+        origin: "*",
+        allowedHeaders: "X-Token"
+    };
+    callback(null, corsOptions);
+};

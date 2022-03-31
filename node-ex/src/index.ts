@@ -4,11 +4,13 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { Routes } from "./routes";
-import {tokenMiddleware} from "./middleware";
+import {tokenMiddleware, corsOptionDelegate} from "./middleware";
+import cors = require("cors");
 
 createConnection().then(async connection => {
   const app = express();
   app.use(bodyParser.json());
+  app.use(cors(corsOptionDelegate));
   app.use(tokenMiddleware);
   Routes.forEach(route => {
     (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
