@@ -1,6 +1,6 @@
 import {DeepPartial, EntityRepository, Repository} from "typeorm";
 import { User } from "../entity/account/User"
-import {TokenMiddleware, tokenMiddleware } from "../middleware";
+import {TokenMiddleware } from "../middleware";
 
 export interface UserPaginationResponse {
     data: User[];
@@ -14,7 +14,7 @@ export interface UserCreatedResponse {
 
 export interface TokenResponse {
     token: string;
-}1
+}
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
