@@ -14,7 +14,7 @@ export interface UserCreatedResponse {
 
 export interface TokenResponse {
     token: string;
-}
+}1
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {

@@ -1,13 +1,15 @@
 import {NextFunction, Request, Response} from "express";
 import {User} from "../entity/account/User";
 import {TokenResponse, UserCreatedResponse, UserPaginationResponse, UserRepository} from "../repository/UserRepository";
-import {DeepPartial, getConnection, getCustomRepository} from "typeorm";
+import {DeepPartial, getCustomRepository} from "typeorm";
+import {userEmitter} from "../emitter/UserEmitter";
 
 export class UserController {
     constructor() {
     }
 
     private userRepository = getCustomRepository(UserRepository);
+    private userEmitter = userEmitter;
 
     async getById(request: Request, response: Response, next: NextFunction): Promise<User> {
         return await this.userRepository.findOne(request.params.id);
@@ -23,6 +25,7 @@ export class UserController {
         const validatedData = UserController.validateUserCreateData(request.body);
         const {token, user} = this.userRepository.createWithToken(validatedData);
         await this.userRepository.save(user);
+        this.userEmitter.emit('createUser');
         return {token, user};
     }
 
