@@ -35,7 +35,6 @@ export class User extends BaseEntity {
         profile => profile.user,
         {onDelete: "CASCADE", nullable: true}
     )
-    @JoinColumn()
     profile: Promise<Profile> | Profile
 
     @OneToMany(
