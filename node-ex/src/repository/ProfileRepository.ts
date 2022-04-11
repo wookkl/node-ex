@@ -4,7 +4,7 @@ import {Profile} from "../entity/account/Profile";
 
 @EntityRepository(Profile)
 export class ProfileRepository extends Repository<Profile> {
-    createDefaultProfile(entityLike: DeepPartial<Profile>) {
-        super.create(entityLike);
+    createDefaultProfile(entityLike: DeepPartial<Profile>): Profile{
+        return super.create(entityLike);
     }
 }

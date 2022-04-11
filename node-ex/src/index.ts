@@ -5,10 +5,11 @@ import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { Routes } from "./routes";
 import {tokenMiddleware, corsOptionDelegate} from "./middleware";
-import cors = require("cors");
+import * as cors from "cors";
 
-createConnection().then(async connection => {
-  const app = express();
+export const app = express();
+
+export const connection = createConnection().then(async connection => {
   app.use(bodyParser.json());
   app.use(cors(corsOptionDelegate));
   app.use(tokenMiddleware);
@@ -27,5 +28,6 @@ createConnection().then(async connection => {
   app.listen(3000);
 
   console.log("Express server has started on port 3000. Open http://localhost:3000/user to see results");
-
+  return connection
 }).catch(error => console.log(error));
+console.log(connection)
